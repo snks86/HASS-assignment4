@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Garamond">
+  <title style="color: white;">Assignment_4</title> <!-- title color white -->
+
+  <style>
+    body {
+      background-color: black; /* background color to black */
+      font-family: 'Garamond', serif; /* font */
+    }
+
+    .tooltip {
+      background: rgb(6, 113, 74); /* box color */
+      font-size: 14px;
+      color: rgb(255, 255, 255);    /* font color */
+      position: absolute;
+      padding-top: 5px;
+      padding-left: 5px;
+      height: 75px;
+      width: 100px;
+      z-index: 1000;
+      display: none; /* Initially hide the tooltip */
+    }
+
+    svg {
+      display: block;
+      stroke: black;
+      stroke-width: 1px;
+    }
+
+    h1 {
+      text-align: center;
+      color: white;
+      font-size: 36px; /* Increase font size of header */
+    }
+
+    path {
+      stroke: black; /* Set the stroke color explicitly for paths */
+    }
+
+    /* Define spectral color scheme for the map */
+    rect:nth-child(1) { fill: #b7b4b3; } /* Line 29 */
+    rect:nth-child(2) { fill: #fee0d2; } /* Line 30 */
+    rect:nth-child(3) { fill: #fcbba1; } /* Line 31 */
+    rect:nth-child(4) { fill: #fc9272; } /* Line 32 */
+    rect:nth-child(5) { fill: #fb6a4a; } /* Line 33 */
+    rect:nth-child(6) { fill: #ef3b2c; } /* Line 34 */
+    rect:nth-child(7) { fill: #cb181d; } /* Line 35 */
+    rect:nth-child(8) { fill: #a50f15; } /* Line 36 */
+    rect:nth-child(9) { fill: #67000d; } /* Line 37 */
+    rect:nth-child(10) { fill: #310003; } /* Line 38 */
+
+    /* Legend text color and font size */
+    #legend text {
+  fill: white;
+  font-size: 10px;
+  font-weight: bold; /* Make the text bold */
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Singapore 2023 Population Density</h1>
+
+  <svg viewBox="0 0 1000 600"></svg>
+  <div class="tooltip"></div> <!-- Tooltip div -->
+
+  <div id="legend">
+    <svg width="400" height="50"> <!-- Adjust width here -->
+      <g id="legendRect">
+        <rect x="0" y="18" width="29" height="10" fill="#9e0142"></rect> <!-- Legend colors -->
+        <rect x="29" y="18" width="29" height="10" fill="#d53e4f"></rect>
+        <rect x="58" y="18" width="29" height="10" fill="#f46d43"></rect>
+        <rect x="87" y="18" width="29" height="10" fill="#fdae61"></rect>
+        <rect x="116" y="18" width="29" height="10" fill="#fee08b"></rect>
+        <rect x="144" y="18" width="29" height="10" fill="#e6f598"></rect>
+        <rect x="173" y="18" width="29" height="10" fill="#abdda4"></rect>
+        <rect x="202" y="18" width="29" height="10" fill="#66c2a5"></rect>
+        <rect x="231" y="18" width="29" height="10" fill="#3288bd"></rect>
+        <rect x="260" y="18" width="29" height="10" fill="#5e4fa2"></rect>
+      </g>
+      <!-- Legend colors -->
+      <g transform="translate(0,28)" fill="none" font-size="10" font-family="Segoe UI" text-anchor="middle">
+        <g class="tick" opacity="1" transform="translate(29.5,0)">
+          <line stroke="#fff5f0" y2="6" y1="-10"></line>
+          <text fill="white" y="9" dy="0.71em">10000</text>
+        </g>
+        <g class="tick" opacity="1" transform="translate(58.5,0)">
+          <line stroke="#fee0d2" y2="6" y1="-10"></line>
+          <text fill="white" y="9" dy="0.71em">20000</text>
+        </g>
+        <g class="tick" opacity="1" transform="translate(87.5,0)">
+          <line stroke="#fcbba1" y2="6" y1="-10"></line>
+          <text fill="white" y="9" dy="0.71em">30000</text>
+        </g>
+        <g class="tick" opacity="1" transform="translate(116.5,0)">
+          <line stroke="#fc9272" y2="6" y1="-10"></line>
+          <text fill="white" y="9" dy="0.71em">40000</text>
+        </g>
+        <g class="tick" opacity="1" transform="translate(144.5,0)">
+          <line stroke="#fb6a4a" y2="6" y1="-10"></line>
+          <text fill="white" y="9" dy="0.71em">50000</text>
+        </g>
+        <g class="tick" opacity="1" transform="translate(173.5,0)">
+          <line stroke="#ef3b2c" y2="6" y1="-10"></line>
+          <text fill="white" y="9" dy="0.71em">60000</text>
+        </g>
+        <g class="tick" opacity="1" transform="translate(202.5,0)">
+          <line stroke="#cb181d" y2="6" y1="-10"></line>
+          <text fill="white" y="9" dy="0.71em">70000</text>
+        </g>
+        <g class="tick" opacity="1" transform="translate(231.5,0)">
+          <line stroke="#a50f15" y2="6" y1="-10"></line>
+          <text fill="white" y="9" dy="0.71em">80000</text>
+        </g>
+        <g class="tick" opacity="1" transform="translate(260.5,0)">
+          <line stroke="#67000d" y2="6" y1="-10"></line>
+          <text fill="white" y="9" dy="0.71em">90000</text>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+  <script src="lib/legend.js"></script>
+  <script>
+    let width = 1000, height = 600;
+    let legendwrapper = d3.select("#legend")
+    let legendsvg = legendwrapper.select("svg")
+
+    let svg = d3.select("svg")
+      .attr("viewBox", "0 0 " + width + " " + height)
+
+    // Load external data and boot
+    Promise.all([d3.json("https://chi-loong.github.io/HASS02.526/assignments/sgmap.json"),
+      d3.csv("https://chi-loong.github.io/HASS02.526/assignments/population2023.csv")
+    ]).then(data => {
+
+      let mapFeatures = [];
+      data[0].features.forEach(d => {
+        let result = data[1].find(e => { return e["Subzone"].toUpperCase() == d.properties["Subzone Name"].toUpperCase(); })
+        console.log("result =", result);
+        let mapObject = d;
+        if (result !== undefined) {
+          if (result.Population !== "0") {
+            mapObject.Population = result.Population;
+          }
+        }
+        mapFeatures.push(mapObject);
+      });
+
+      // Map and projection
+      var projection = d3.geoMercator()
+        .center([103.851959, 1.290270])
+        .fitExtent([[20, 20], [980, 580]], data[0]);
+
+      let geopath = d3.geoPath().projection(projection);
+      let colorScale = d3.scaleQuantize([1, 130000], d3.schemePuBu[9]);
+
+      svg.append("g")
+        .attr("id", "districts")
+        .selectAll("path")
+        .data(data[0].features)
+        .enter()
+        .append("path")
+        .style("stroke-width", "0.5px")
+        .style("stroke", "black")
+        .attr("d", geopath)
+        .attr("fill", d => {
+          if (d.Population !== "0" && d.Population !== undefined && 90000 < d.Population) { return '#020000'; }
+          if (80000 < d.Population) { return '#460000' }
+          if (70000 < d.Population) { return '#780000' }
+          if (60000 < d.Population) { return '#AB1212' }
+          if (50000 < d.Population) { return '#BB2323' }
+          if (40000 < d.Population) { return '#C93535' }
+          if (30000 < d.Population) { return '#D64646' }
+          if (20000 < d.Population) { return '#E15757' }
+          if (10000 < d.Population) { return '#EA6969' }
+          if (d.Population < 10000) { return '#F37A7A' }
+          else return "grey";
+        })
+        .on("mouseover", (event, d) => {
+          d3.select(event.currentTarget)
+            .style('stroke', "white")
+            .style("stroke-width", "3px");
+          d3.select(".tooltip")
+            .style("display", "block") // Show the tooltip
+            .text(d.properties["Subzone Name"])
+            .append("p")
+            .text('Population: ' + d.Population)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 30) + "px");
+        })
+        .on("mousemove", (event) => {
+          d3.select(".tooltip")
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 30) + "px");
+        })
+        .on("mouseout", (event, d) => {
+          d3.select(event.currentTarget)
+            .style('stroke', "white")
+            .style('stroke-width', 0);
+          d3.select(".tooltip")
+            .style("display", "none") // Hide the tooltip
+            .text("");
+        });
+
+      legend({
+        title: popType + " Population",
+        width: 360, // Adjust width of legend
+        tickFormat: ".0f"
+      });
+    });
+
+
+    
+  </script>
+
+  
+
+</body>
+
+</html>
+
